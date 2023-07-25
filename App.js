@@ -1,20 +1,28 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StatusBar } from "expo-status-bar"
+import { SafeAreaView, StyleSheet, Switch, Text, View } from "react-native"
+import { useColorScheme } from "nativewind"
+import ProductsList from "./components/ProductsList"
+import Constants from "expo-constants"
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+	const { colorScheme, toggleColorScheme } = useColorScheme()
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+	return (
+		<SafeAreaView style={{ paddingTop: Constants.statusBarHeight + 5 }}>
+			<View				
+				className="items-center bg-gray-200 dark:bg-black">
+				<View className="flex-row w-full gap-5 items-center">
+					<Text className="text-2xl dark:text-white">New collection</Text>
+					<Switch
+						value={colorScheme === "light"}
+						onValueChange={toggleColorScheme}
+					/>
+				</View>
+				<View>
+					<ProductsList />
+				</View>
+				<StatusBar style={colorScheme === "dark" ? "light" : "dark"} />
+			</View>
+		</SafeAreaView>
+	)
+}
